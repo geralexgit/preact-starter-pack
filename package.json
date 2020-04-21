@@ -11,8 +11,15 @@
     "type": "git",
     "url": "git+https://github.com/geralexgit/preact-starter-pack.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "preact",
+    "typescript",
+    "postcss",
+    "storeon",
+    "boilerplate",
+    "webpack 4"
+  ],
+  "author": "Geralex",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/geralexgit/preact-starter-pack/issues"
@@ -32,6 +39,7 @@
     "style-loader": "^1.1.4",
     "ts-loader": "^7.0.1",
     "typescript": "^3.8.3",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^4.1.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",

@@ -1,16 +1,17 @@
-const path = require('path');
-const autoprefixer = require('autoprefixer');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path')
+const autoprefixer = require('autoprefixer')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = (env, args) => {
-    let production = false;
+    let production = false
 
     if (args && args.mode === 'production') {
-        production = true;
-        console.log('== Production mode');
+        production = true
+        console.log('== Production mode')
     } else {
-        console.log('== Development mode');
+        console.log('== Development mode')
     }
 
     return {
@@ -25,17 +26,27 @@ module.exports = (env, args) => {
                 {
                     test: /\.css$/,
                     use: [
-                        {loader: "style-loader"},
-                        {loader: "@teamsupercell/typings-for-css-modules-loader"},
-                        {loader: "css-loader", options: {modules: true, importLoaders: 1}},
-                        {loader: "postcss-loader", options: { plugins: [ autoprefixer() ],}},
-                    ]
+                        { loader: 'style-loader' },
+                        { loader: '@teamsupercell/typings-for-css-modules-loader' },
+                        {
+                            loader: 'css-loader',
+                            options: { modules: true, importLoaders: 1 },
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                plugins: [
+                                    autoprefixer({
+                                        browsers: ['ie >= 8', 'last 4 version'],
+                                    }),
+                                ],
+                            },
+                        },
+                    ],
                 },
                 {
                     test: /\.(png|jpg|gif)$/i,
-                    use: [
-                        {loader: 'url-loader', options: {limit: 8192,}},
-                    ],
+                    use: [{ loader: 'url-loader', options: { limit: 8192 } }],
                 },
                 {
                     test: /\.(png|jpe?g|gif)$/i,
@@ -51,17 +62,32 @@ module.exports = (env, args) => {
             extensions: ['.tsx', '.ts', '.js'],
         },
         output: {
-            filename: 'app.js',
+            filename: 'app.js?[hash]',
             path: path.resolve(__dirname, 'dist'),
         },
         devServer: {
             headers: {
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': '*',
             },
             contentBase: path.join(__dirname, 'dist'),
             compress: true,
             port: 4200,
         },
+
+        optimization: {
+            splitChunks: {
+                chunks: 'async',
+                minChunks: 2,
+            },
+            minimize: production,
+            minimizer: [
+                new UglifyJsPlugin({
+                    parallel: true,
+                    sourceMap: false,
+                }),
+            ],
+        },
+
         plugins: [
             new ForkTsCheckerWebpackPlugin(),
             new CopyWebpackPlugin([
@@ -70,10 +96,9 @@ module.exports = (env, args) => {
                     from: './src/static/**/*',
                     to: path.resolve('./dist/'),
                     toType: 'dir',
-                    flatten: true
+                    flatten: true,
                 },
             ]),
-        ]
+        ],
     }
-
-};
+}
