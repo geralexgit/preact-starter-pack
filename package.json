@@ -19,11 +19,16 @@
   },
   "homepage": "https://github.com/geralexgit/preact-starter-pack#readme",
   "dependencies": {
-    "preact": "^10.4.1",
-    "ts-loader": "^7.0.1",
-    "typescript": "^3.8.3"
+    "preact": "^10.4.1"
   },
   "devDependencies": {
+    "@teamsupercell/typings-for-css-modules-loader": "^2.1.1",
+    "css-loader": "^3.5.2",
+    "file-loader": "^6.0.0",
+    "style-loader": "^1.1.4",
+    "ts-loader": "^7.0.1",
+    "typescript": "^3.8.3",
+    "url-loader": "^4.1.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
