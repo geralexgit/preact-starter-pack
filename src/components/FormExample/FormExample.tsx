@@ -9,12 +9,12 @@ const FormExample: FunctionalComponent = () => {
             const newState = {
                 ...formState,
                 [currentTarget.name]: currentTarget.value.toString()
-            }
+            };
             return {
                 ...newState
             }
         })
-    }
+    };
 
     return (
         <div>
