@@ -4,7 +4,7 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = (env, args) => {
     let production = false;
@@ -82,12 +82,12 @@ module.exports = (env, args) => {
                 minChunks: 2,
             },
             minimize: production,
-            minimizer: [
-                new UglifyJsPlugin({
-                    parallel: true,
-                    sourceMap: false,
-                }),
-            ],
+            // minimizer: [
+            //     new UglifyJsPlugin({
+            //         parallel: true,
+            //         sourceMap: false,
+            //     }),
+            // ],
         },
 
         plugins: [
