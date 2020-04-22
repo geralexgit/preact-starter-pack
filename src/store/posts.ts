@@ -2,6 +2,8 @@ import {StoreonModule} from 'storeon'
 
 import {getPosts, getPostsSuccess, getPostsFailure, getPostsRequest} from '../actions'
 
+import { apiGetPosts } from '../services/demo'
+
 type PostStatus = 'pending' | 'success' | 'error'
 
 export interface Post {
@@ -32,19 +34,21 @@ const initialState: PostsState = {
 
 export const posts: StoreonModule<PostsState, PostsEvents> = store => {
     store.on('@init', () => (initialState));
+
     store.on(getPosts, async () => {
         store.dispatch(getPostsRequest);
         try {
-            const data: Post[] = await fetch('https://jsonplaceholder.typicode.com/posts').then(response => response.json());
+            const { data } = await apiGetPosts();
             store.dispatch(getPostsSuccess, data)
         } catch (e) {
             store.dispatch(getPostsFailure)
         }
     });
+
     store.on(getPostsRequest, state => ({
-            ...state,
-            status: 'pending',
-        }));
+        ...state,
+        status: 'pending',
+    }));
     store.on(getPostsSuccess, (state, payload) => {
         const newPosts = payload.reduce((acc, next) => {
             return {

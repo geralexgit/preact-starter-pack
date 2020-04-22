@@ -1,3 +1,5 @@
+const webpack = require("webpack");
+
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -6,7 +8,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = (env, args) => {
     let production = false;
-
+    const devEnv = args.mode === 'production' ? 'prod' : 'dev';
     if (args && args.mode === 'production') {
         production = true;
         console.log('== Production mode')
@@ -90,6 +92,12 @@ module.exports = (env, args) => {
 
         plugins: [
             new ForkTsCheckerWebpackPlugin(),
+            new webpack.DefinePlugin({
+                'process.env': {
+                    NODE_ENV: JSON.stringify(devEnv),
+                },
+                PROJECT_ENV: JSON.stringify(devEnv),
+            }),
             new CopyWebpackPlugin([
                 // static files to the site root folder (index and robots)
                 {
