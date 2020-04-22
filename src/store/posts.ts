@@ -19,8 +19,8 @@ export interface PostsState {
 
 export interface PostsEvents {
     [getPosts]: string
-    [getPostsFailure]: undefined
     [getPostsSuccess]: Post[]
+    [getPostsFailure]: undefined
     [getPostsRequest]: undefined
 }
 
@@ -32,23 +32,32 @@ const initialState: PostsState = {
 
 export const posts: StoreonModule<PostsState, PostsEvents> = store => {
     store.on('@init', () => (initialState));
-    store.on(getPosts, async (state, user) => {
-        store.dispatch(getPostsRequest)
+    store.on(getPosts, async () => {
+        store.dispatch(getPostsRequest);
         try {
-            const data = await fetch('https://jsonplaceholder.typicode.com/posts').then(response => response.json());
+            const data: Post[] = await fetch('https://jsonplaceholder.typicode.com/posts').then(response => response.json());
             store.dispatch(getPostsSuccess, data)
         } catch (e) {
             store.dispatch(getPostsFailure)
         }
     });
     store.on(getPostsRequest, state => ({
-        ...state,
-        status: 'pending'
-    }));
-    store.on(getPostsSuccess, state => ({
-        ...state,
-        status: 'success'
-    }));
+            ...state,
+            status: 'pending',
+        }));
+    store.on(getPostsSuccess, (state, payload) => {
+        const newPosts = payload.reduce((acc, next) => {
+            return {
+                ...acc,
+                [next.id]: next
+            }
+        }, {});
+        return ({
+            ...state,
+            status: 'success',
+            posts: newPosts
+        });
+    });
     store.on(getPostsFailure, state => ({
         ...state,
         status: 'error'
