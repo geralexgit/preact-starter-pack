@@ -1,14 +1,14 @@
-const path = require('path')
-const autoprefixer = require('autoprefixer')
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
+const path = require('path');
+const autoprefixer = require('autoprefixer');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = (env, args) => {
-    let production = false
+    let production = false;
 
     if (args && args.mode === 'production') {
-        production = true
+        production = true;
         console.log('== Production mode')
     } else {
         console.log('== Development mode')
@@ -101,4 +101,4 @@ module.exports = (env, args) => {
             ]),
         ],
     }
-}
+};

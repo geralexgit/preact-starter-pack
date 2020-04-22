@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint:fix": "tslint --fix -c ./tslint.json 'src/**/*{.ts,.tsx}'",
     "build": "webpack --mode production",
     "start": "webpack-dev-server --mode development --open"
   },
@@ -26,7 +27,8 @@
   },
   "homepage": "https://github.com/geralexgit/preact-starter-pack#readme",
   "dependencies": {
-    "preact": "^10.4.1"
+    "preact": "^10.4.1",
+    "preact-router": "^3.2.1"
   },
   "devDependencies": {
     "@teamsupercell/typings-for-css-modules-loader": "^2.1.1",
@@ -35,9 +37,11 @@
     "css-loader": "^3.5.2",
     "file-loader": "^6.0.0",
     "fork-ts-checker-webpack-plugin": "^4.1.3",
+    "html-webpack-plugin": "^4.2.0",
     "postcss-loader": "^3.0.0",
     "style-loader": "^1.1.4",
     "ts-loader": "^7.0.1",
+    "tslint": "^6.1.1",
     "typescript": "^3.8.3",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^4.1.0",
