@@ -1,0 +1,12 @@
+.layout {
+    display: flex;
+}
+
+.aside {
+    width: 15%;
+}
+
+.main {
+    flex: 1;
+    overflow: auto;
+}

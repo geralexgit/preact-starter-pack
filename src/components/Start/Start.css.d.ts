@@ -1,6 +1,7 @@
 declare namespace StartCssModule {
   export interface IStartCss {
     h1: string;
+    wrapper: string;
   }
 }
 

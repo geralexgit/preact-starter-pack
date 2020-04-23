@@ -14,9 +14,8 @@ export interface Post {
 }
 
 export interface PostsState {
-    status: PostStatus;
-    counter: number,
-    posts: Record<string, Post>
+    postsStatus: PostStatus;
+    postsContent: Record<string, Post>
 }
 
 export interface PostsEvents {
@@ -27,14 +26,12 @@ export interface PostsEvents {
 }
 
 const initialState: PostsState = {
-    status: "success",
-    counter: 0,
-    posts: {},
+    postsStatus: "success",
+    postsContent: {},
 };
 
 export const posts: StoreonModule<PostsState, PostsEvents> = store => {
     store.on('@init', () => (initialState));
-
     store.on(getPosts, async () => {
         store.dispatch(getPostsRequest);
         try {
@@ -44,10 +41,9 @@ export const posts: StoreonModule<PostsState, PostsEvents> = store => {
             store.dispatch(getPostsFailure)
         }
     });
-
     store.on(getPostsRequest, state => ({
         ...state,
-        status: 'pending',
+        postsStatus: 'pending',
     }));
     store.on(getPostsSuccess, (state, payload) => {
         const newPosts = payload.reduce((acc, next) => {
@@ -58,12 +54,12 @@ export const posts: StoreonModule<PostsState, PostsEvents> = store => {
         }, {});
         return ({
             ...state,
-            status: 'success',
-            posts: newPosts
+            postsStatus: 'success',
+            postsContent: newPosts
         });
     });
     store.on(getPostsFailure, state => ({
         ...state,
-        status: 'error'
+        postsStatus: 'error'
     }))
 };

@@ -1,6 +1,8 @@
 import { h, FunctionalComponent, JSX } from "preact";
 import { useState,  } from 'preact/hooks';
 
+import style from '../FormExample/FormExample.css'
+
 const FormExample: FunctionalComponent = () => {
     const [formState, setFormState] = useState({});
 
@@ -17,7 +19,7 @@ const FormExample: FunctionalComponent = () => {
     };
 
     return (
-        <div>
+        <div className={style.formWrapper}>
             <form>
                 <fieldset>
                     <label for="nameField">Name</label>
@@ -30,7 +32,7 @@ const FormExample: FunctionalComponent = () => {
                         <option value="24+">24+</option>
                     </select>
                     <label for="commentField">Comment</label>
-                    <textarea placeholder="Hi CJ …" id="commentField"></textarea>
+                    <textarea placeholder="Hi CJ …" id="commentField" />
                     <div class="float-right">
                         <input type="checkbox" id="confirmField"/>
                         <label class="label-inline" for="confirmField">Send a copy to yourself</label>

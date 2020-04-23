@@ -3,10 +3,9 @@ import { Link } from 'preact-router/match';
 import Start from "../components/Start/Start";
 
 const Home: FunctionalComponent = () => (
-    <div className='container'>
-        <Link href={'/about'}>about</Link>
-        <Link href={'/form'}>form</Link>
-        <Start />
+    <div>
+        <h1>Preact Starter Pack</h1>
+
     </div>
 );
 
