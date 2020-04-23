@@ -11,7 +11,7 @@ import FormExample from "./components/FormExample/FormExample";
 
 import style from "./components/Layout/Layout.css";
 
-import {store} from "./store/index"
+import {store} from "./store"
 
 const App: FunctionalComponent = () => (
     <StoreContext.Provider value={store}>
@@ -37,5 +37,5 @@ const App: FunctionalComponent = () => (
         </div>
     </StoreContext.Provider>
 );
-
+export const modalContainer = document.getElementById('modals');
 export default App;
