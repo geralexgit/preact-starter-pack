@@ -1,9 +1,11 @@
 import {h, FunctionalComponent} from "preact"
-import Start from "../components/Start/Start";
+import GetPosts from "../components/GetPosts/GetPosts";
+import Posts from "../components/Posts/Posts";
 
-const AboutPage: FunctionalComponent = () => (
+const AboutPage: FunctionalComponent<{path: string}> = () => (
     <div>
-        <Start />
+        <GetPosts />
+        <Posts />
     </div>
 );
 

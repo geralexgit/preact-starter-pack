@@ -1,11 +1,9 @@
 import { h, FunctionalComponent } from "preact"
-import { Link } from 'preact-router/match';
-import Start from "../components/Start/Start";
 
-const Home: FunctionalComponent = () => (
+
+const Home: FunctionalComponent<{path: string}> = () => (
     <div>
         <h1>Preact Starter Pack</h1>
-
     </div>
 );
 

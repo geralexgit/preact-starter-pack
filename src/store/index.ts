@@ -1,16 +1,12 @@
-import { createStoreon, StoreonModule } from 'storeon'
+import { createStoreon } from 'storeon';
 import { storeonDevtools } from 'storeon/devtools';
 
-import { posts as postsStore, PostsState } from './posts'
+import { posts as postsStore } from './posts';
+import {PostsStore, PostsEvents} from "./types";
 
 const initDevTools = process.env.NODE_ENV !== 'production' && storeonDevtools;
 
-export interface AppState {
-    posts: PostsState,
-}
+interface State extends PostsStore {}
+interface Events extends PostsEvents {}
 
-const appStore = {
-    posts: postsStore
-}
-
-export const store = createStoreon([postsStore, initDevTools]);
+export const store = createStoreon<State, Events>([postsStore, initDevTools]);

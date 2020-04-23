@@ -1,36 +1,18 @@
 import {StoreonModule} from 'storeon'
 
-import {getPosts, getPostsSuccess, getPostsFailure, getPostsRequest} from '../actions'
+import {getPosts, getPostsSuccess, getPostsFailure, getPostsRequest, clearPosts} from '../actions'
 
 import { apiGetPosts } from '../services/demo'
+import { PostsEvents, PostsStore } from './types'
 
-type PostStatus = 'pending' | 'success' | 'error'
-
-export interface Post {
-    userId: number;
-    id: number;
-    title: string;
-    body: string;
-}
-
-export interface PostsState {
-    postsStatus: PostStatus;
-    postsContent: Record<string, Post>
-}
-
-export interface PostsEvents {
-    [getPosts]: string
-    [getPostsSuccess]: Post[]
-    [getPostsFailure]: undefined
-    [getPostsRequest]: undefined
-}
-
-const initialState: PostsState = {
-    postsStatus: "success",
-    postsContent: {},
+const initialState: PostsStore = {
+    posts: {
+        postsStatus: "success",
+        postsContent: {},
+    }
 };
 
-export const posts: StoreonModule<PostsState, PostsEvents> = store => {
+export const posts: StoreonModule<PostsStore, PostsEvents> = store => {
     store.on('@init', () => (initialState));
     store.on(getPosts, async () => {
         store.dispatch(getPostsRequest);
@@ -41,9 +23,17 @@ export const posts: StoreonModule<PostsState, PostsEvents> = store => {
             store.dispatch(getPostsFailure)
         }
     });
+    store.on(clearPosts, state => ({
+        posts: {
+            ...state.posts,
+            postsContent: {}
+        }
+    }));
     store.on(getPostsRequest, state => ({
-        ...state,
-        postsStatus: 'pending',
+        posts: {
+            ...state.posts,
+            postsStatus: 'pending'
+        }
     }));
     store.on(getPostsSuccess, (state, payload) => {
         const newPosts = payload.reduce((acc, next) => {
@@ -54,12 +44,17 @@ export const posts: StoreonModule<PostsState, PostsEvents> = store => {
         }, {});
         return ({
             ...state,
-            postsStatus: 'success',
-            postsContent: newPosts
+            posts: {
+                postsStatus: 'success',
+                postsContent: newPosts
+            }
         });
     });
     store.on(getPostsFailure, state => ({
         ...state,
-        postsStatus: 'error'
+        posts: {
+            ...state.posts,
+            postsStatus: 'error'
+        }
     }))
 };
