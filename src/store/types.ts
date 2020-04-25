@@ -1,4 +1,4 @@
-import {getPosts, getPostsFailure, getPostsRequest, getPostsSuccess, clearPosts} from "../actions";
+import {getPosts, getPostsFailure, getPostsRequest, getPostsSuccess, clearPosts, createPost, createPostSuccess} from "../actions";
 
 export type PostStatus = 'pending' | 'success' | 'error'
 
@@ -14,14 +14,18 @@ export interface PostsState {
     postsContent: Record<string, Post>
 }
 
+export interface PostsStore {
+    posts: PostsState
+}
+
+export interface CreatePost extends Omit<Post, 'id'> {}
+
 export interface PostsEvents {
     [getPosts]: string
     [getPostsSuccess]: Post[]
     [getPostsFailure]: undefined
     [getPostsRequest]: undefined
     [clearPosts]: undefined
-}
-
-export interface PostsStore {
-    posts: PostsState
+    [createPost]: CreatePost
+    [createPostSuccess]: Post
 }

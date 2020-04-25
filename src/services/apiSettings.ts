@@ -21,6 +21,7 @@ export const httpConfig: AxiosRequestConfig = {
     },
 };
 
+
 export const axiosClient = axios.create(httpConfig);
 
 interface AxiosResponse<TResult> extends OriginalAxiosResponse {

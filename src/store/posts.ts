@@ -1,9 +1,17 @@
 import {StoreonModule} from 'storeon'
 
-import {getPosts, getPostsSuccess, getPostsFailure, getPostsRequest, clearPosts} from '../actions'
+import {
+    getPosts,
+    getPostsSuccess,
+    getPostsFailure,
+    getPostsRequest,
+    clearPosts,
+    createPost,
+    createPostSuccess
+} from '../actions'
 
-import { apiGetPosts } from '../services/demo'
-import { PostsEvents, PostsStore } from './types'
+import {apiCreatePost, apiGetPosts} from '../services/demo'
+import {PostsEvents, PostsStore} from './types'
 
 const initialState: PostsStore = {
     posts: {
@@ -17,8 +25,17 @@ export const posts: StoreonModule<PostsStore, PostsEvents> = store => {
     store.on(getPosts, async () => {
         store.dispatch(getPostsRequest);
         try {
-            const { data } = await apiGetPosts();
+            const {data} = await apiGetPosts();
             store.dispatch(getPostsSuccess, data)
+        } catch (e) {
+            store.dispatch(getPostsFailure)
+        }
+    });
+    store.on(createPost, async (state, payload) => {
+        store.dispatch(getPostsRequest);
+        try {
+            const {data} = await apiCreatePost(payload);
+            store.dispatch(createPostSuccess, data)
         } catch (e) {
             store.dispatch(getPostsFailure)
         }
@@ -47,6 +64,18 @@ export const posts: StoreonModule<PostsStore, PostsEvents> = store => {
             posts: {
                 postsStatus: 'success',
                 postsContent: newPosts
+            }
+        });
+    });
+    store.on(createPostSuccess, (state, payload) => {
+        return ({
+            ...state,
+            posts: {
+                ...state.posts,
+                postsContent: {
+                    ...state.posts.postsContent,
+                    [payload.id]: payload
+                }
             }
         });
     });
