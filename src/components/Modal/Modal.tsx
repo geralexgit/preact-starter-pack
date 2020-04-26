@@ -10,7 +10,9 @@ const Modal: FunctionalComponent<Props> = (props) => {
         <div className={styles.modalWrapper}>
             <div className={styles.modalContent}>
                 {props.children}
-                <button onClick={props.toggleModal}>close</button>
+                <div className={styles.modalControls}>
+                    <button className={styles.closeModalBtn} onClick={props.toggleModal}>close</button>
+                </div>
             </div>
         </div>
     );

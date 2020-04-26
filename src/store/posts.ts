@@ -25,7 +25,8 @@ export const posts: StoreonModule<PostsStore, PostsEvents> = store => {
     store.on(getPosts, async () => {
         store.dispatch(getPostsRequest);
         try {
-            const {data} = await apiGetPosts();
+            const data = await apiGetPosts();
+            console.log(data);
             store.dispatch(getPostsSuccess, data)
         } catch (e) {
             store.dispatch(getPostsFailure)
@@ -34,7 +35,7 @@ export const posts: StoreonModule<PostsStore, PostsEvents> = store => {
     store.on(createPost, async (state, payload) => {
         store.dispatch(getPostsRequest);
         try {
-            const {data} = await apiCreatePost(payload);
+            const data = await apiCreatePost(payload);
             store.dispatch(createPostSuccess, data)
         } catch (e) {
             store.dispatch(getPostsFailure)
@@ -72,6 +73,7 @@ export const posts: StoreonModule<PostsStore, PostsEvents> = store => {
             ...state,
             posts: {
                 ...state.posts,
+                postsStatus: 'success',
                 postsContent: {
                     ...state.posts.postsContent,
                     [payload.id]: payload

@@ -72,6 +72,7 @@ module.exports = (env, args) => {
                 'Access-Control-Allow-Origin': '*',
             },
             contentBase: path.join(__dirname, 'dist'),
+            historyApiFallback: true,
             compress: true,
             port: 4200,
         },
