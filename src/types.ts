@@ -23,7 +23,7 @@ export interface FetchOptions {
     cache?: "default" | "no-store" | "reload" | "no-cache" | "force-cache" | "only-if-cached";
     redirect?: "follow" | "error" | "manual";
     referrer?: string;
-    referrerPolicy?: "referrer" | "no-referrer-when-downgrade" | "origin" | "origin-when-cross-origin" | "unsafe-url";
+    referrerPolicy?: "referrer" | "no-referrer-when-downgrade" | "origin" | "origin-when-cross-origin" | "unsafe-url" | "no-referrer";
     integrity?: any;
 }
 
@@ -69,3 +69,5 @@ export interface Window {
     fetch(url: string): Promise<Response>;
     fetch(url: string, options: FetchOptions): Promise<Response>;
 }
+
+export type RequestType = "GET" | "POST" | "DELETE" | "PATCH" | "PUT" | "HEAD" | "OPTIONS" | "CONNECT";

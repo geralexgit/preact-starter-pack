@@ -1,6 +1,9 @@
 declare namespace ModalCssModule {
   export interface IModalCss {
+    closeModalBtn: string;
+    modalAnimation: string;
     modalContent: string;
+    modalControls: string;
     modalWrapper: string;
   }
 }

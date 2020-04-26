@@ -3,3 +3,8 @@
     max-width: 500px;
     padding: 50px 0 0;
 }
+
+.inputError {
+    border-color: red !important;
+    margin-bottom: 0;
+}
