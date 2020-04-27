@@ -11,18 +11,21 @@ type InputEvent = JSX.TargetedEvent<HTMLInputElement, Event> | JSX.TargetedEvent
 const FormExample: FunctionalComponent = () => {
     const [formState, setFormState] = useState({userId: 42, errors: { email: null }});
     const {dispatch} = useStoreon();
+    //TODO: simplify validation
     const inputHandler = ({currentTarget}: InputEvent) => {
         setFormState(() => {
+            const inputValue = currentTarget.value.toString();
             const newState = {
                 ...formState,
                 [currentTarget.name]: currentTarget.value.toString()
             };
             if (currentTarget.name === 'email') {
+                const emailErrors = [];
                 return {
                     ...newState,
                     errors: {
                         ...newState.errors,
-                        [currentTarget.name]: isEmail(currentTarget.value.toString()) === true ? '' : 'is not email',
+                        [currentTarget.name]: isEmail(inputValue) === true ? '' : 'is not email',
                     }
                 }
             } else {
@@ -32,13 +35,17 @@ const FormExample: FunctionalComponent = () => {
             }
         })
     };
-    const handleSubmit = (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
-        e.preventDefault();
-        dispatch(createPost, formState);
-    };
+
     const {errors} = formState;
     const hasEmailError = errors && errors.email !== '' && errors.email !== null;
     const emailErrorClass = hasEmailError ? style.inputError : '';
+
+    const handleSubmit = (e: JSX.TargetedEvent<HTMLFormElement, Event>) => {
+        e.preventDefault();
+        if (!hasEmailError) {
+            dispatch(createPost, formState);
+        }
+    };
 
     return (
         <div className={style.formWrapper}>
@@ -49,7 +56,7 @@ const FormExample: FunctionalComponent = () => {
                     <input onInput={inputHandler} name='title' type="text" placeholder="Title" id="titleField"/>
                     <label for="emailField">Email</label>
                     <input className={`${emailErrorClass}`} onInput={inputHandler} name='email' type="email" placeholder="Email" id="emailField"/>
-                    {hasEmailError && <span>wrong email</span>}
+                    {hasEmailError && <span>{errors.email}</span>}
                     <label for="commentField">Body</label>
                     <textarea onInput={inputHandler} name='body' type="text" placeholder="Input text here"
                               id="commentField"/>

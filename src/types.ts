@@ -1,4 +1,4 @@
-import preact from "preact";
+import preact, {JSX} from "preact";
 
 export type Component<P = {}, S = {}, SS = any> = preact.Component<P, S>;
 export type ReactElement<P = {}, S = any> = preact.VNode<P>;
@@ -13,6 +13,8 @@ export type CSSProperties = string | {[key: string]: string | number};
 // Spec: https://fetch.spec.whatwg.org/
 // Polyfill: https://github.com/github/fetch
 // Definitions by: Ryan Graham <https://github.com/ryan-codingintrigue>
+export type InputEvent = JSX.TargetedEvent<HTMLInputElement, Event> | JSX.TargetedEvent<HTMLTextAreaElement, Event>
+
 
 export interface FetchOptions {
     method?: "GET" | "POST" | "DELETE" | "PATCH" | "PUT" | "HEAD" | "OPTIONS" | "CONNECT";

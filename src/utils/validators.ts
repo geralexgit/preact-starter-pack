@@ -83,3 +83,4 @@ export const isAutoNumber = function (value: string) {
 export const isRegion = function (value: string) {
     return /^\d{1,3}$/.test(value);
 };
+

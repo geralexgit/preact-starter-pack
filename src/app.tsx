@@ -8,6 +8,7 @@ import AboutPage from './pages/AboutPage';
 import FormPage from "./pages/FormPage";
 
 import FormExample from "./components/FormExample/FormExample";
+import FormHooks from "./components/FormHooks/FormHooks";
 
 import style from "./components/Layout/Layout.css";
 
@@ -31,6 +32,7 @@ const App: FunctionalComponent = () => (
                     <AboutPage path="/about"/>
                     <FormPage path="/form">
                         <FormExample/>
+                        <FormHooks />
                     </FormPage>
                 </Router>
             </main>
