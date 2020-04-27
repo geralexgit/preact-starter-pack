@@ -53,7 +53,6 @@ const FormExample: FunctionalComponent = () => {
         disable,
     } = useForm(stateSchema, stateValidatorSchema, onSubmitForm);
     const {title, body, email} = values;
-
     return (
         <div className={style.formWrapper}>
             <h1>From example</h1>
@@ -91,7 +90,7 @@ const FormExample: FunctionalComponent = () => {
                             <span className="error">{errors.body}</span>
                         )}
                     </label>
-                    <input class="button-primary" type="submit" value="Send"/>
+                    <input class="button-primary" type="submit" value="Send" disabled={errors.body !== ''}/>
                 </fieldset>
             </form>
         </div>
