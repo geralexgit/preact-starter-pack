@@ -1,6 +1,7 @@
 declare namespace FormExampleCssModule {
   export interface IFormExampleCss {
     formWrapper: string;
+    inputError: string;
   }
 }
 

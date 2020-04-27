@@ -10,7 +10,6 @@ export const isEmail = function (value: string) {
 export const isPhone = function (value: string) {
     return /^[ ()+]*([0-9][ ()+-]*){11}$/.test(value);
 };
-
 export const isFio = function (value: string) {
     if (!value) {
         return false;
