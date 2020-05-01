@@ -6,6 +6,7 @@
       "options": [120]
     },
     "new-parens": true,
+    "no-string-literal": false,
     "no-arg": true,
     "no-bitwise": true,
     "no-conditional-assignment": true,

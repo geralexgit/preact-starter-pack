@@ -1,9 +1,9 @@
-import {h, FunctionalComponent, JSX} from "preact"
+import {h, FunctionalComponent} from "preact"
 import {useStoreon} from "storeon/preact"
 
 import {createPost} from "../../actions"
 import {isEmail} from '../../utils/validators'
-import useForm from '../../utils/hooks'
+import useForm from '../../utils/useForm'
 import style from '../FormExample/FormExample.css'
 
 const FormExample: FunctionalComponent = () => {
@@ -46,11 +46,7 @@ const FormExample: FunctionalComponent = () => {
         errors,
         dirty,
         handleOnChange,
-        handleOnSubmit,
-        setFieldError,
-        setFieldValue,
-        setStateSchema,
-        disable,
+        handleOnSubmit
     } = useForm(stateSchema, stateValidatorSchema, onSubmitForm);
     const {title, body, email} = values;
     return (
@@ -58,8 +54,6 @@ const FormExample: FunctionalComponent = () => {
             <h1>From example</h1>
             <form onSubmit={handleOnSubmit}>
                 <fieldset>
-                    {/*<label for="titleField">Title</label>*/}
-                    {/*<input onInput={inputHandler} name='title' type="text" placeholder="Title" id="titleField"/>*/}
                     <label htmlFor="title">
                         Title:
                         <input
@@ -84,7 +78,8 @@ const FormExample: FunctionalComponent = () => {
                     </label>
 
                     <label for="commentField">Body
-                        <textarea onInput={handleOnChange} value={body} name='body' type="text" placeholder="Input text here"
+                        <textarea onInput={handleOnChange} value={body} name='body' type="text"
+                                  placeholder="Input text here"
                                   id="commentField"/>
                         {errors.body && dirty.body && (
                             <span className="error">{errors.body}</span>

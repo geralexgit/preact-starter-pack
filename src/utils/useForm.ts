@@ -1,6 +1,6 @@
 import { JSX } from "preact";
 import { useState, useEffect, useCallback } from 'preact/hooks';
-import { get_prop_values, is_object, is_required, VALUE, ERROR } from '../utils';
+import { get_prop_values, is_object, is_required, VALUE, ERROR } from './index';
 import { InputEvent as PreactInputEvent } from '../types'
 
 /**
@@ -27,14 +27,15 @@ function useForm(
     // Get a local copy of stateSchema
     useEffect(() => {
         setStateSchema(stateSchema);
-
         setInitialErrorState();
     }, []); // eslint-disable-line
 
     // Set a brand new field values and errors
     // If stateSchema changes
     useEffect(() => {
+        // tslint:disable-next-line:no-shadowed-variable
         const values = get_prop_values(state, VALUE);
+        // tslint:disable-next-line:no-shadowed-variable
         const errors = Object.keys(values).reduce((accu, curr) => {
             // @ts-ignore
             accu[curr] = validateField(curr, values[curr]);
@@ -78,7 +79,7 @@ function useForm(
                 return;
             }
 
-            let error = '';
+            let error: string;
             error = is_required(value, fieldValidator['required']);
 
             // Bail out if field is not required and no value set.
@@ -126,7 +127,6 @@ function useForm(
             // Making sure that there's no error in the state
             // before calling the submit callback function
             if (!validateErrorState()) {
-                // @ts-ignore
                 submitFormCallback(values);
             }
         },
